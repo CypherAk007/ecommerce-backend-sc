@@ -1,0 +1,14 @@
+package com.project.ecomm.demo.configs;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+
+@Configuration
+public class RestTemplateConfig {
+
+    @Bean //we annotate with @Bean as RestTemplate is not editable...
+    public RestTemplate getRestTemplate(){
+        return new RestTemplate();
+    }
+}
