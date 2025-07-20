@@ -28,11 +28,11 @@ public class ProductController {
 
 //    Instead of exposing the internal package flow in postman
 //            we have beautified the error message now
-    @ExceptionHandler(NullPointerException.class)
-    public ExceptionDTO handleNullPointerException(){
-        ExceptionDTO exceptionDTO = new ExceptionDTO();
-        exceptionDTO.setStatus("Failure!!");
-        exceptionDTO.setMessage("Product Cannot Be Null!!");
-        return exceptionDTO;
-    }
+//    @ExceptionHandler(NullPointerException.class)
+//    public ExceptionDTO handleNullPointerException(){
+//        ExceptionDTO exceptionDTO = new ExceptionDTO();
+//        exceptionDTO.setStatus("Failure!!");
+//        exceptionDTO.setMessage("Product Cannot Be Null!!");
+//        return exceptionDTO;
+//    }
 }
