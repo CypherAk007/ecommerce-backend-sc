@@ -13,4 +13,12 @@ public class GlobalExceptionHandler {
         exceptionDTO.setMessage("NPE Has Occured!!");
         return exceptionDTO;
     }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ExceptionDTO handleGlobalProductNotFoundException(Exception e){
+        ExceptionDTO exceptionDTO = new ExceptionDTO();
+        exceptionDTO.setStatus("Failure");
+        exceptionDTO.setMessage(e.getMessage());
+        return exceptionDTO;
+    }
 }

@@ -3,6 +3,7 @@ package com.project.ecomm.demo.Controllers;
 import com.project.ecomm.demo.Models.Product;
 import com.project.ecomm.demo.dtos.ExceptionDTO;
 import com.project.ecomm.demo.dtos.ProductResponseDTO;
+import com.project.ecomm.demo.exceptions.ProductNotFoundException;
 import com.project.ecomm.demo.service.FakeStoreProductService;
 import com.project.ecomm.demo.service.ProductService;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,10 +22,12 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public ProductResponseDTO getProductById(@PathVariable("id") long id){
+    public ProductResponseDTO getProductById(@PathVariable("id") long id) throws ProductNotFoundException {
         Product product =  productService.getProductById(id);
         return ProductResponseDTO.from(product);
     }
+
+
 
 //    Instead of exposing the internal package flow in postman
 //            we have beautified the error message now
