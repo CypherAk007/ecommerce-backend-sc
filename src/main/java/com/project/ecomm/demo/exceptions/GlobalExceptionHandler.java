@@ -41,4 +41,12 @@ public class GlobalExceptionHandler {
         exceptionDTO.setMessage(e.getMessage());
         return new ResponseEntity<>(exceptionDTO, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(ProductNotUpdatedException.class)
+    public ResponseEntity<ExceptionDTO> handleGlobalUnableToUpdateProductException(Exception e){
+        ExceptionDTO exceptionDTO = new ExceptionDTO();
+        exceptionDTO.setStatus("Failure");
+        exceptionDTO.setMessage(e.getMessage());
+        return new ResponseEntity<>(exceptionDTO, HttpStatus.NOT_FOUND);
+    }
 }

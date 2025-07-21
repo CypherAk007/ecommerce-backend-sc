@@ -66,5 +66,19 @@ public class ProductController {
         return new ResponseEntity<>(ProductResponseDTO.from(product), HttpStatus.CREATED);
     }
 
+    @PutMapping("/products/{id}")
+    public ResponseEntity<ProductResponseDTO> replaceProduct(@PathVariable("id") long id,
+                                                             @RequestBody CreateFakeStoreProductRequestDTO createFakeStoreProductRequestDTO) throws ProductsNotFoundException {
+        Product product = productService.replaceProduct(
+                id,
+                createFakeStoreProductRequestDTO.getName(),
+                createFakeStoreProductRequestDTO.getDescription(),
+                createFakeStoreProductRequestDTO.getPrice(),
+                createFakeStoreProductRequestDTO.getImageUrl(),
+                createFakeStoreProductRequestDTO.getCategory()
+        );
+        return new ResponseEntity<>(ProductResponseDTO.from(product), HttpStatus.CREATED);
+    }
+
 
 }

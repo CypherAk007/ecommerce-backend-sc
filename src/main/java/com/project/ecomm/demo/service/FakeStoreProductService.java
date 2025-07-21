@@ -5,7 +5,9 @@ import com.project.ecomm.demo.dtos.FakeStoreRequestDTO;
 import com.project.ecomm.demo.dtos.FakeStoreResponseDTO;
 import com.project.ecomm.demo.exceptions.ProductNotCreatedException;
 import com.project.ecomm.demo.exceptions.ProductNotFoundException;
+import com.project.ecomm.demo.exceptions.ProductNotUpdatedException;
 import com.project.ecomm.demo.exceptions.ProductsNotFoundException;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -54,6 +56,32 @@ public class FakeStoreProductService implements ProductService{
             throw new ProductNotCreatedException("Unable to Create Product with name: "+name);
         }
         return fakeStoreResponseDTO.toProduct();
+    }
+
+    @Override
+    public Product replaceProduct(long id, String name, String description, double price, String imageUrl, String category) {
+        FakeStoreRequestDTO updateFakeStoreRequestDTO =  createDTOFromParams(name,description,price,imageUrl,category);
+//        exchange() -> put returns void but we need response for put so use Exchange()
+//        exchange works with entities not raw objects -> takes http entity and returns response entity
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<FakeStoreRequestDTO> requestEntity = new HttpEntity<>(
+                updateFakeStoreRequestDTO,httpHeaders
+        );
+
+        ResponseEntity<FakeStoreResponseDTO> responseEntity = restTemplate.exchange(
+                "https://fakestoreapi.com/products/"+id,
+                HttpMethod.PUT,
+                requestEntity,
+                FakeStoreResponseDTO.class
+        );
+
+        if(responseEntity.getBody()==null){
+            throw new ProductNotUpdatedException("Unable to Update Product with id: "+id);
+        }
+
+        return responseEntity.getBody().toProduct();
     }
 
     private FakeStoreRequestDTO createDTOFromParams(String name, String description,double price, String imageUrl,String category){
