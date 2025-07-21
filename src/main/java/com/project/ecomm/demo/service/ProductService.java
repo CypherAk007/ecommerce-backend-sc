@@ -2,9 +2,13 @@ package com.project.ecomm.demo.service;
 
 import com.project.ecomm.demo.Models.Product;
 import com.project.ecomm.demo.exceptions.ProductNotFoundException;
+import com.project.ecomm.demo.exceptions.ProductsNotFoundException;
+
+import java.util.List;
 
 public interface ProductService {
     Product getProductById(long id) throws ProductNotFoundException;
+    List<Product> getAllProducts() throws ProductsNotFoundException;
 }
 //if we have multiple Classes implementing ProductService then ProductController throw error
 //M1-> name one @Primary

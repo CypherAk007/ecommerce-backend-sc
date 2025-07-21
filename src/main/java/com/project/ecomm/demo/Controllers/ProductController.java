@@ -4,12 +4,16 @@ import com.project.ecomm.demo.Models.Product;
 import com.project.ecomm.demo.dtos.ExceptionDTO;
 import com.project.ecomm.demo.dtos.ProductResponseDTO;
 import com.project.ecomm.demo.exceptions.ProductNotFoundException;
+import com.project.ecomm.demo.exceptions.ProductsNotFoundException;
 import com.project.ecomm.demo.service.FakeStoreProductService;
 import com.project.ecomm.demo.service.ProductService;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //Every thing sits on top of @components
 @RestController //-> @Controller + @ResponseBody
@@ -38,4 +42,14 @@ public class ProductController {
 //        exceptionDTO.setMessage("Product Cannot Be Null!!");
 //        return exceptionDTO;
 //    }
+
+    @GetMapping("/products")
+    public List<ProductResponseDTO> getAllProducts() throws ProductsNotFoundException {
+        List<Product> products = productService.getAllProducts();
+        List<ProductResponseDTO> productResponseDTOS =new ArrayList<>();
+        for(Product product: products){
+            productResponseDTOS.add(ProductResponseDTO.from(product));
+        }
+        return productResponseDTOS;
+    }
 }
