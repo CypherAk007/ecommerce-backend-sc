@@ -1,16 +1,17 @@
 package com.project.ecomm.demo.Controllers;
 
 import com.project.ecomm.demo.Models.Product;
+import com.project.ecomm.demo.dtos.CreateFakeStoreProductRequestDTO;
 import com.project.ecomm.demo.dtos.ExceptionDTO;
+import com.project.ecomm.demo.dtos.FakeStoreRequestDTO;
 import com.project.ecomm.demo.dtos.ProductResponseDTO;
 import com.project.ecomm.demo.exceptions.ProductNotFoundException;
 import com.project.ecomm.demo.exceptions.ProductsNotFoundException;
 import com.project.ecomm.demo.service.FakeStoreProductService;
 import com.project.ecomm.demo.service.ProductService;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,4 +53,18 @@ public class ProductController {
         }
         return productResponseDTOS;
     }
+
+    @PostMapping("/products")
+    public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody CreateFakeStoreProductRequestDTO createFakeStoreProductRequestDTO) throws ProductsNotFoundException {
+        Product product = productService.createProduct(
+                createFakeStoreProductRequestDTO.getName(),
+                createFakeStoreProductRequestDTO.getDescription(),
+                createFakeStoreProductRequestDTO.getPrice(),
+                createFakeStoreProductRequestDTO.getImageUrl(),
+                createFakeStoreProductRequestDTO.getCategory()
+        );
+        return new ResponseEntity<>(ProductResponseDTO.from(product), HttpStatus.CREATED);
+    }
+
+
 }

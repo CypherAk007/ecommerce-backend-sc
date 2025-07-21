@@ -9,6 +9,7 @@ import java.util.List;
 public interface ProductService {
     Product getProductById(long id) throws ProductNotFoundException;
     List<Product> getAllProducts() throws ProductsNotFoundException;
+    Product createProduct(String name,String description, double price, String imageUrl, String category);
 }
 //if we have multiple Classes implementing ProductService then ProductController throw error
 //M1-> name one @Primary

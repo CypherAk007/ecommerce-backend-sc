@@ -1,7 +1,9 @@
 package com.project.ecomm.demo.service;
 
 import com.project.ecomm.demo.Models.Product;
+import com.project.ecomm.demo.dtos.FakeStoreRequestDTO;
 import com.project.ecomm.demo.dtos.FakeStoreResponseDTO;
+import com.project.ecomm.demo.exceptions.ProductNotCreatedException;
 import com.project.ecomm.demo.exceptions.ProductNotFoundException;
 import com.project.ecomm.demo.exceptions.ProductsNotFoundException;
 import org.springframework.stereotype.Service;
@@ -42,5 +44,25 @@ public class FakeStoreProductService implements ProductService{
             products.add(product);
         }
         return products;
+    }
+
+    @Override
+    public Product createProduct(String name,String description,double price,String imageUrl,String category) {
+        FakeStoreRequestDTO fakeStoreRequestDTO = createDTOFromParams(name,description,price,imageUrl,category);
+        FakeStoreResponseDTO fakeStoreResponseDTO = restTemplate.postForObject("https://fakestoreapi.com/products",fakeStoreRequestDTO,FakeStoreResponseDTO.class);
+        if(fakeStoreResponseDTO==null){
+            throw new ProductNotCreatedException("Unable to Create Product with name: "+name);
+        }
+        return fakeStoreResponseDTO.toProduct();
+    }
+
+    private FakeStoreRequestDTO createDTOFromParams(String name, String description,double price, String imageUrl,String category){
+        FakeStoreRequestDTO fakeStoreRequestDTO = new FakeStoreRequestDTO();
+        fakeStoreRequestDTO.setTitle(name);
+        fakeStoreRequestDTO.setDescription(description);
+        fakeStoreRequestDTO.setPrice(price);
+        fakeStoreRequestDTO.setImage(imageUrl);
+        fakeStoreRequestDTO.setCategory(category);
+        return fakeStoreRequestDTO;
     }
 }
