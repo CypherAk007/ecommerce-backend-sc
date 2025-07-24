@@ -24,4 +24,8 @@ public class BaseModel {
 
     @LastModifiedDate
     private Date updatedAt;
+
+    private boolean deleted;//soft delete
+
+    private String name;
 }

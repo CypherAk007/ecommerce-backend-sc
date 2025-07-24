@@ -7,8 +7,9 @@ import lombok.Setter;
 //@Entity
 @Getter
 @Setter
+@Entity
 public abstract class User extends BaseModel{
-    private String name;
+//    private String name;//take fm base class
     private String email;
     private String password;
 }
