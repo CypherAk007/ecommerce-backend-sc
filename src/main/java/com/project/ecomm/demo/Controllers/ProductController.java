@@ -9,6 +9,7 @@ import com.project.ecomm.demo.exceptions.ProductNotFoundException;
 import com.project.ecomm.demo.exceptions.ProductsNotFoundException;
 import com.project.ecomm.demo.service.FakeStoreProductService;
 import com.project.ecomm.demo.service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ProductController {
 
     private ProductService productService;
 
-    public ProductController(ProductService productService){
+    public ProductController(@Qualifier("productStorageService") ProductService productService){
         this.productService = productService;
     }
 
