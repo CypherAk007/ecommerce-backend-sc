@@ -7,6 +7,8 @@ import com.project.ecomm.demo.exceptions.ProductsNotFoundException;
 import com.project.ecomm.demo.repositories.CategoryRepository;
 import com.project.ecomm.demo.repositories.ProductRepository;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,12 +26,33 @@ public class ProductStorageService implements ProductService{
 
     @Override
     public Product getProductById(long id) throws ProductNotFoundException {
-        Optional<Product> productOptional = productRepository.getProductById(id);
-        if(productOptional.isEmpty()){
-            throw new ProductNotFoundException("Product With id: "+id+" Not Found!!");
-        }
-        Product product = productOptional.get();
-        return product;
+//        Optional<Product> productOptional = productRepository.getProductById(id);
+//        if(productOptional.isEmpty()){
+//            throw new ProductNotFoundException("Product With id: "+id+" Not Found!!");
+//        }
+//        Product product = productOptional.get();
+//        return product;
+
+
+//        TEST OUT THE NEW QUERRIES FOR THIS ENDPOINT
+
+////        List<Product> findByCategory(Category category);
+//        Optional<Category> categoryOptional = categoryRepository.findByName("electronics");
+//        List<Product> products = productRepository.findByCategory(categoryOptional.get());
+
+////       List<Product> findByCategory_Name(String Name);
+//        List<Product> products = productRepository.findByCategory_Name("electronics");
+//        System.out.println(products);
+
+////        @Query("select p from Product p where p.category.name=:categoryName")
+////        List<Product> getProductByCategoryName(@Param("categoryName") String categoryName);
+//        List<Product> products = productRepository.getProductByCategoryName("electronics");
+//        System.out.println(products);
+
+        List<Product> products = productRepository.getProductByCategoryNameNative("electronics");
+        System.out.println(products);
+        return null;
+
     }
 
     @Override
