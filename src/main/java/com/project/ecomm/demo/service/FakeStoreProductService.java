@@ -28,7 +28,7 @@ public class FakeStoreProductService implements ProductService{
         FakeStoreResponseDTO fakeStoreResponseDTO = restTemplate.getForObject(
                 "https://fakestoreapi.com/products/"+id,
                 FakeStoreResponseDTO.class);
-        if(fakeStoreResponseDTO==null){
+        if(fakeStoreResponseDTO==null) {
             throw new ProductNotFoundException("Product with id: "+id+" not found!!");
         }
         return fakeStoreResponseDTO.toProduct();
