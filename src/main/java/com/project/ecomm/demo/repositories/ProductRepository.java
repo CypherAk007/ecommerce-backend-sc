@@ -24,3 +24,4 @@ public interface  ProductRepository extends JpaRepository<Product,Long> {
     List<Product> getProductByCategoryNameNative(@Param("categoryName") String categoryName);
 
 }
+ 
